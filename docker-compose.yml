@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  mysqldb:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: mysql-container
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+    ports:
+      - 3307:3306
+    volumes:
+      - db:/var/lib/mysql
+
+  spring-app:
+    depends_on:
+      - mysqldb
+    image: hazemlan/achat
+    restart: on-failure
+    container_name: spring-app-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "6868:8089"
+    stdin_open: true
+    tty: true
+
+
+volumes:
+  db:
