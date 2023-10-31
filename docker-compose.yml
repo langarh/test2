@@ -3,6 +3,7 @@ services:
   mysqldb:
     image: mysql:latest
     restart: unless-stopped
+    container_name: mysqldb
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
