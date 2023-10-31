@@ -4,7 +4,7 @@ services:
     image: mysql:latest
     restart: unless-stopped
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     ports:
       - 3307:3306
     volumes:
@@ -23,8 +23,6 @@ services:
     image: hazemlan/achat
     restart: on-failure
     container_name: spring-app-container
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
     ports:
       - "6868:8089"
     stdin_open: true
