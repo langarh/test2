@@ -36,7 +36,7 @@ services:
       MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
   # Frontend application service
   front:
-    image: faroukboussaid/devops:front
+    image: hazemlan/achatfront
     ports:
       - "80:80"
 
