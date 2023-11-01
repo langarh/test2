@@ -3,19 +3,21 @@ services:
   mysqldb:
     image: mysql:latest
     restart: unless-stopped
-    container_name: mysqldb
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: devops
     ports:
-      - 3307:3306
+      - 3306:3306
     volumes:
       - db:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:
-      - 8181:80
+      - 8181:8181
     environment:
       PMA_HOST: mysqldb
+      PMA_USER: root
+      PMA_PASSWORD: root
     depends_on:
       - mysqldb
   spring-app:
@@ -23,11 +25,21 @@ services:
       - mysqldb
     image: hazemlan/achat:latest
     restart: on-failure
-    container_name: spring-app-container
     ports:
-      - "6868:8089"
-    stdin_open: true
-    tty: true
+      - "8089:8089"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/devops?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: '*'
+      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: 'true'
+      MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED: 'true'
+  # Frontend application service
+  front:
+    image: faroukboussaid/devops:front
+    ports:
+      - "80:80"
+
 
 
 volumes:
