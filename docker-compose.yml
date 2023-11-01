@@ -13,7 +13,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:
-      - 8181:8181
+      - 8282:8282
     environment:
       PMA_HOST: mysqldb
       PMA_USER: root
