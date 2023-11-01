@@ -21,7 +21,7 @@ services:
   spring-app:
     depends_on:
       - mysqldb
-    image: hazemlan/achat
+    image: hazemlan/achat:latest
     restart: on-failure
     container_name: spring-app-container
     ports:
